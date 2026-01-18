@@ -1,8 +1,7 @@
 export const metadata = { title: "Book" };
 
 // TODO: Replace with your public Aryeo order link (NOT the admin dashboard URL)
-const ARYEO_PUBLIC_ORDER_URL = "https://skyline-media-2.aryeo.com/order-forms/019b9451-e260-7189-9042-ce42cdbac56d
-";
+const ARYEO_PUBLIC_ORDER_URL = "https://skyline-media-2.aryeo.com/order-forms/019b9451-e260-7189-9042-ce42cdbac56d";
 
 export default function BookPage() {
   return (
