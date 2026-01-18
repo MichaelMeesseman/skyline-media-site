@@ -1,0 +1,67 @@
+{
+  "servedStates": [
+    "MI"
+  ],
+  "states": {
+    "MI": {
+      "name": "Michigan",
+      "slug": "michigan",
+      "metros": [
+        {
+          "name": "Metro Detroit",
+          "cities": [
+            {
+              "name": "Rochester Hills",
+              "slug": "rochester-hills"
+            },
+            {
+              "name": "Royal Oak",
+              "slug": "royal-oak"
+            },
+            {
+              "name": "Detroit",
+              "slug": "detroit"
+            }
+          ]
+        },
+        {
+          "name": "Grand Rapids Area",
+          "cities": [
+            {
+              "name": "Grand Rapids",
+              "slug": "grand-rapids"
+            }
+          ]
+        },
+        {
+          "name": "Northern Michigan",
+          "cities": [
+            {
+              "name": "Traverse City",
+              "slug": "traverse-city"
+            }
+          ]
+        }
+      ]
+    },
+    "AZ": {
+      "name": "Arizona",
+      "slug": "arizona",
+      "metros": [
+        {
+          "name": "Phoenix Metro",
+          "cities": [
+            {
+              "name": "Phoenix",
+              "slug": "phoenix"
+            },
+            {
+              "name": "Scottsdale",
+              "slug": "scottsdale"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
