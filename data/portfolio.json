@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "royal-oak-48067-modern-ranch",
+    "title": "Royal Oak Modern Ranch",
+    "street": "E 4th St",
+    "showStreet": false,
+    "city": "Royal Oak",
+    "state": "MI",
+    "zip": "48067",
+    "showZip": true,
+    "date": "2026-01-20",
+    "services": ["Photos", "Zillow 3D"],
+    "tags": ["modern", "ranch", "bright"],
+    "coverImage": "/portfolio/sample1.jpg",
+    "gallery": ["/portfolio/sample1.jpg", "/portfolio/sample2.jpg", "/portfolio/sample3.jpg"],
+    "notes": "Zillow-ready package with fast turnaround."
+  }
+]
