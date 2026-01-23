@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import portfolioData from "../../../../data/portfolio.json";
 
 type Item = {
@@ -6,10 +7,14 @@ type Item = {
   title: string;
   street?: string;
   showStreet?: boolean;
+  streetNumber?: string;
+  streetName?: string;
   city: string;
   state: string;
   zip?: string;
   showZip?: boolean;
+  showFullAddress?: boolean;
+  addressLabel?: string;
   date: string;
   services: string[];
   tags?: string[];
@@ -23,7 +28,6 @@ export function generateStaticParams() {
   return items.map((x) => ({ slug: x.slug }));
 }
 
-// ✅ Make metadata async + await params
 export async function generateMetadata({
   params,
 }: {
@@ -34,17 +38,16 @@ export async function generateMetadata({
   const items = portfolioData as Item[];
   const item = items.find((x) => x.slug === slug);
 
+  const address = item?.addressLabel || `${item?.city}, ${item?.state}`;
+
   return item
     ? {
-        title: `${item.title} | ${item.city}, ${item.state} Real Estate Media`,
-        description: `Real estate media project in ${item.city}, ${item.state}. Services: ${item.services.join(
-          ", "
-        )}.`,
+        title: `${item.title} | ${address} Real Estate Media`,
+        description: `Real estate media project at ${address}. Services: ${item.services.join(", ")}.`,
       }
     : { title: "Portfolio | Skyline Media", description: "Skyline Media portfolio." };
 }
 
-// ✅ Make page async + await params
 export default async function PortfolioItemPage({
   params,
 }: {
@@ -59,7 +62,7 @@ export default async function PortfolioItemPage({
     return (
       <div className="space-y-3">
         <h1 className="text-2xl font-semibold">Not found</h1>
-        <p className="text-neutral-700">This portfolio item doesn’t exist.</p>
+        <p className="text-neutral-700">This portfolio item doesn't exist.</p>
         <Link className="underline" href="/portfolio">
           Back to portfolio
         </Link>
@@ -67,13 +70,17 @@ export default async function PortfolioItemPage({
     );
   }
 
-  const locationLine = [
-    item.showStreet && item.street ? item.street : null,
-    `${item.city}, ${item.state}`,
-    item.showZip && item.zip ? item.zip : null,
-  ]
-    .filter(Boolean)
-    .join(" • ");
+  // Build full address for display
+  const fullAddress = item.addressLabel || 
+    [
+      item.streetNumber && item.streetName 
+        ? `${item.streetNumber} ${item.streetName}` 
+        : item.street || null,
+      `${item.city}, ${item.state}`,
+      item.zip || null,
+    ]
+      .filter(Boolean)
+      .join(", ");
 
   const images = item.gallery?.length ? item.gallery : [item.coverImage];
 
@@ -84,7 +91,11 @@ export default async function PortfolioItemPage({
           ← Back to Portfolio
         </Link>
         <h1 className="text-3xl font-semibold">{item.title}</h1>
-        <p className="text-neutral-700">{locationLine}</p>
+        {item.showFullAddress && fullAddress && (
+          <address className="not-italic text-neutral-700">
+            {fullAddress}
+          </address>
+        )}
 
         <div className="flex flex-wrap gap-2 pt-2">
           {item.services.map((s) => (
@@ -106,15 +117,28 @@ export default async function PortfolioItemPage({
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        {images.map((img) => (
-          <div key={img} className="overflow-hidden rounded-xl border bg-neutral-100">
-            <img
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {images.map((img, index) => (
+          <div
+            key={`${img}-${index}`}
+            className="relative overflow-hidden rounded-xl border bg-neutral-100 aspect-[4/3]"
+          >
+            <Image
               src={img}
-              alt={item.title}
-              className="h-full w-full object-cover"
-              loading="lazy"
+              alt={`${item.title} - Image ${index + 1}`}
+              fill
+              className="object-cover"
+              quality={95}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              priority={index === 0}
             />
+            {item.showFullAddress && fullAddress && (
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-3">
+                <address className="not-italic text-white text-sm font-medium">
+                  {fullAddress}
+                </address>
+              </div>
+            )}
           </div>
         ))}
       </div>
