@@ -23,28 +23,46 @@ export function generateStaticParams() {
   return items.map((x) => ({ slug: x.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
+// ✅ Make metadata async + await params
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
   const items = portfolioData as Item[];
-  const item = items.find((x) => x.slug === params.slug);
+  const item = items.find((x) => x.slug === slug);
 
   return item
     ? {
         title: `${item.title} | ${item.city}, ${item.state} Real Estate Media`,
-        description: `Real estate media project in ${item.city}, ${item.state}. Services: ${item.services.join(", ")}.`,
+        description: `Real estate media project in ${item.city}, ${item.state}. Services: ${item.services.join(
+          ", "
+        )}.`,
       }
     : { title: "Portfolio | Skyline Media", description: "Skyline Media portfolio." };
 }
 
-export default function PortfolioItemPage({ params }: { params: { slug: string } }) {
+// ✅ Make page async + await params
+export default async function PortfolioItemPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
   const items = portfolioData as Item[];
-  const item = items.find((x) => x.slug === params.slug);
+  const item = items.find((x) => x.slug === slug);
 
   if (!item) {
     return (
       <div className="space-y-3">
         <h1 className="text-2xl font-semibold">Not found</h1>
         <p className="text-neutral-700">This portfolio item doesn’t exist.</p>
-        <Link className="underline" href="/portfolio">Back to portfolio</Link>
+        <Link className="underline" href="/portfolio">
+          Back to portfolio
+        </Link>
       </div>
     );
   }
@@ -53,23 +71,37 @@ export default function PortfolioItemPage({ params }: { params: { slug: string }
     item.showStreet && item.street ? item.street : null,
     `${item.city}, ${item.state}`,
     item.showZip && item.zip ? item.zip : null,
-  ].filter(Boolean).join(" • ");
+  ]
+    .filter(Boolean)
+    .join(" • ");
 
   const images = item.gallery?.length ? item.gallery : [item.coverImage];
 
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <Link href="/portfolio" className="text-sm underline text-neutral-700">← Back to Portfolio</Link>
+        <Link href="/portfolio" className="text-sm underline text-neutral-700">
+          ← Back to Portfolio
+        </Link>
         <h1 className="text-3xl font-semibold">{item.title}</h1>
         <p className="text-neutral-700">{locationLine}</p>
 
         <div className="flex flex-wrap gap-2 pt-2">
           {item.services.map((s) => (
-            <span key={s} className="rounded-full border px-2 py-1 text-xs text-neutral-700">{s}</span>
+            <span
+              key={s}
+              className="rounded-full border px-2 py-1 text-xs text-neutral-700"
+            >
+              {s}
+            </span>
           ))}
           {(item.tags ?? []).map((t) => (
-            <span key={t} className="rounded-full border px-2 py-1 text-xs text-neutral-700">#{t}</span>
+            <span
+              key={t}
+              className="rounded-full border px-2 py-1 text-xs text-neutral-700"
+            >
+              #{t}
+            </span>
           ))}
         </div>
       </div>
@@ -77,7 +109,12 @@ export default function PortfolioItemPage({ params }: { params: { slug: string }
       <div className="grid gap-4 sm:grid-cols-2">
         {images.map((img) => (
           <div key={img} className="overflow-hidden rounded-xl border bg-neutral-100">
-            <img src={img} alt={item.title} className="h-full w-full object-cover" loading="lazy" />
+            <img
+              src={img}
+              alt={item.title}
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
           </div>
         ))}
       </div>

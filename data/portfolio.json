@@ -12,7 +12,39 @@
     "services": ["Photos", "Zillow 3D"],
     "tags": ["modern", "ranch", "bright"],
     "coverImage": "/portfolio/sample1.jpg",
-    "gallery": ["/portfolio/sample1.jpg", "/portfolio/sample2.jpg", "/portfolio/sample3.jpg"],
+    "gallery": ["/portfolio/sample1.jpg"],
     "notes": "Zillow-ready package with fast turnaround."
+  },
+  {
+    "slug": "detroit-48226-downtown-loft",
+    "title": "Downtown Detroit Loft",
+    "street": "Woodward Ave",
+    "showStreet": false,
+    "city": "Detroit",
+    "state": "MI",
+    "zip": "48226",
+    "showZip": true,
+    "date": "2026-01-19",
+    "services": ["Photos"],
+    "tags": ["downtown", "loft", "city"],
+    "coverImage": "/portfolio/sample2.jpg",
+    "gallery": ["/portfolio/sample2.jpg"],
+    "notes": "Clean interiors + wide angles for maximum space feel."
+  },
+  {
+    "slug": "phoenix-85004-townhome",
+    "title": "Phoenix Townhome",
+    "street": "E Washington St",
+    "showStreet": false,
+    "city": "Phoenix",
+    "state": "AZ",
+    "zip": "85004",
+    "showZip": true,
+    "date": "2026-01-18",
+    "services": ["Photos"],
+    "tags": ["out-of-state", "townhome", "southwest"],
+    "coverImage": "/portfolio/sample3.jpg",
+    "gallery": ["/portfolio/sample3.jpg"],
+    "notes": "Out-of-state example to show nationwide coverage."
   }
 ]
